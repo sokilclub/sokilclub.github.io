@@ -631,9 +631,9 @@ footer{padding:24px 0;background:var(--darker);text-align:center;font-size:13px;
       <div class="qs" data-s="5">
         <div class="qq">Заповніть форму — і оберемо <span class="ai">зручний час</span></div>
         <div class="qf">
-          <div class="qf-g"><input id="qN" placeholder="Ваше ім'я"></div>
-          <div class="qf-g"><div class="phone-wrap"><span class="phone-code" id="pCode">🇺🇦 +380</span><input id="qPh" type="tel" inputmode="numeric" placeholder="67 123 45 67" oninput="fmtPh(this)"></div></div>
-          <div class="qf-g"><input id="qMs" placeholder="Telegram або Instagram @username (необов'язково)"></div>
+          <div class="qf-g"><input id="qN" placeholder="Ваше ім'я" enterkeyhint="next"></div>
+          <div class="qf-g"><div class="phone-wrap"><span class="phone-code" id="pCode">🇺🇦 +380</span><input id="qPh" type="tel" inputmode="numeric" placeholder="67 123 45 67" oninput="fmtPh(this)" enterkeyhint="done"></div></div>
+          <div class="qf-g"><input id="qMs" placeholder="Telegram або Instagram @username (необов'язково)" enterkeyhint="done"></div>
           <button class="btn btn-p" onclick="sendQ()">ЗАПИСАТИСЯ НА ДІАГНОСТИКУ →</button>
         </div>
       </div>
@@ -714,10 +714,12 @@ function pkQual(el){
 function gQ(n){document.querySelectorAll('.qs').forEach(s=>s.classList.remove('on'));cs=n;document.querySelector(`.qs[data-s="${cs}"]`).classList.add('on');document.querySelectorAll('.qp').forEach((d,i)=>{d.classList.remove('on','done');if(i<cs-1)d.classList.add('done');else if(i===cs-1)d.classList.add('on')});document.getElementById('qHead').classList.toggle('compact',cs>1)}
 function sendQ(){
   const n=document.getElementById('qN').value.trim();
-  const digits=document.getElementById('qPh').value.replace(/\D/g,'');
+  const phField=document.getElementById('qPh');
+  const digits=phField.value.replace(/\D/g,'');
+  const need=(phCodes[currentCC].mask.match(/X/g)||[]).length;
   if(!n){document.getElementById('qN').style.borderColor='var(--accent)';return}
-  if(digits.length<7){document.getElementById('qPh').parentElement.style.borderColor='var(--accent)';return}
-  const fullPhone=phCodes[currentCC].code+' '+digits;
+  if(digits.length<need){phField.parentElement.style.borderColor='var(--accent)';return}
+  const fullPhone=phCodes[currentCC].code+' '+phField.value;
   console.log('Quiz submitted:',{name:n,phone:fullPhone,contact:document.getElementById('qMs').value});
   gQ(6);
 }
@@ -732,11 +734,18 @@ function setCountry(cc){
   document.getElementById('qPh').placeholder=info.mask.replace(/X/g,'0');
 }
 function fmtPh(inp){
-  let d=inp.value.replace(/\D/g,'').slice(0,10);
-  let out='';
-  for(let i=0;i<d.length;i++){
-    if(i>0 && i%2===0) out+=' ';
-    out+=d[i];
+  const mask=phCodes[currentCC].mask;
+  const maxD=(mask.match(/X/g)||[]).length;
+  const cc=phCodes[currentCC].code.replace(/\D/g,'');
+  let d=inp.value.replace(/\D/g,'');
+  if(d.startsWith(cc) && d.length>maxD){d=d.slice(cc.length);}
+  d=d.replace(/^0+/,'');
+  d=d.slice(0,maxD);
+  if(!d){inp.value='';return;}
+  let out='',di=0;
+  for(let i=0;i<mask.length && di<d.length;i++){
+    if(mask[i]==='X'){out+=d[di++];}
+    else{out+=mask[i];}
   }
   inp.value=out;
 }
@@ -747,6 +756,12 @@ document.getElementById('pCode').addEventListener('click',()=>{
 });
 document.getElementById('pCode').style.cursor='pointer';
 setCountry('UA');
+/* клавіша Далі/Enter: з імені → до телефону; з телефону або месенджера → відправити */
+(function(){
+  var qN=document.getElementById('qN'),qPh=document.getElementById('qPh'),qMs=document.getElementById('qMs');
+  if(qN)qN.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();qPh.focus();}});
+  [qPh,qMs].forEach(function(el){if(el)el.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();sendQ();}});});
+})();
 </script>
 <div class="lb" id="lb"><span class="lb-x">&times;</span><img id="lbi" src="" alt=""></div>
 <script>
