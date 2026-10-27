@@ -427,7 +427,7 @@ src="https://www.facebook.com/tr?id=1096861196268215&ev=PageView&noscript=1"
 
   <div class="hero-in">
     <div class="hero-badge" style="opacity:0;animation:fu .6s .1s ease-out forwards,badgeFloat 3s 1.5s ease-in-out infinite"><span class="hbd"></span>Безкоштовно · Zoom · 1 година</div>
-    <h1 style="opacity:0;animation:fu .6s .2s ease-out forwards">За 1 годину ви отримаєте<br><span class="tw"><span class="ai" id="twT"></span><span class="twc"></span></span><br>при загрозі раптового нападу</h1>
+    <h1 style="opacity:0;animation:fu .6s .2s ease-out forwards">За 1 годину ви отримаєте<br><span class="tw"><span class="ai" id="twT"></span><span class="twc"></span></span><br>як діяти при загрозі раптового нападу</h1>
     <div class="hero-boosts">
       <span class="hero-boost"><span class="hero-boost-ic"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span>Навіть якщо з нуля</span>
       <span class="hero-boost"><span class="hero-boost-ic"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></span>План і PDF на руки</span>
@@ -632,11 +632,11 @@ src="https://www.facebook.com/tr?id=1096861196268215&ev=PageView&noscript=1"
 
       <!-- КВАЛІФІКАЦІЯ: м'яка ніша — питання про готовність -->
       <div class="qs" data-s="2">
-        <div class="qq">Якщо консультація дасть результат — чи готові ви <span class="ai">інвестувати</span> час та гроші в вирішення своєї проблеми?</div>
+        <div class="qq">Після консультації плануєте <span class="ai">займатися</span> самозахистом?</div>
         <div class="qog qog-1col">
-          <div class="qo" data-qual="yes" onclick="pkQual(this)"><div class="qoi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg></div><span>Так, безпека важливіша</span></div>
-          <div class="qo" data-qual="yes" onclick="pkQual(this)"><div class="qoi"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 11h20"/></svg></div><span>Так, якщо є розстрочка</span></div>
-          <div class="qo" data-qual="no" onclick="pkQual(this)"><div class="qoi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 7v5l3 3"/></svg></div><span>Ні, не поспішаю</span></div>
+          <div class="qo" data-qual="yes" onclick="pkQual(this)"><div class="qoi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg></div><span>Так, цікавить зал у Дніпрі</span></div>
+          <div class="qo" data-qual="yes" onclick="pkQual(this)"><div class="qoi"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg></div><span>Так, поки самостійно / онлайн</span></div>
+          <div class="qo" data-qual="no" onclick="pkQual(this)"><div class="qoi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 7v5l3 3"/></svg></div><span>Поки лише розбираюся</span></div>
         </div>
       </div>
 
@@ -693,7 +693,7 @@ document.querySelectorAll('.rv').forEach(e=>obs.observe(e));
 addEventListener('scroll',()=>{document.getElementById('fcta').classList.toggle('show',scrollY>500)});
 
 /* typewriter */
-const twW=["покроковий план","чіткий маршрут","конкретні дії"];
+const twW=["покроковий план","чіткий план","конкретні кроки"];
 let ti=0,tc=0,td=false,te=document.getElementById('twT');
 function twT(){const w=twW[ti];if(!td){tc++;te.textContent=w.slice(0,tc);if(tc===w.length){setTimeout(()=>{td=true;twT()},2200);return}}else{tc--;te.textContent=w.slice(0,tc);if(tc===0){td=false;ti=(ti+1)%twW.length}}setTimeout(twT,td?40:80)}
 setTimeout(twT,1200);
